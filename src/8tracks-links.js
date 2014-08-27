@@ -14,11 +14,11 @@
 //
 function addMixLinkToPlaylistView (onload) {
     // Find the mix ID
-    elMixIdSource = document.getElementById('review_mix_id');
-    mixID = elMixIdSource.value;
+    var elMixIdSource = document.getElementById('review_mix_id');
+    var mixID = elMixIdSource.value;
     
     // Find the sidebar div we will attach the playlist entries to
-    elSidebar = document.getElementById('sidebar');
+    var elSidebar = document.getElementById('sidebar');
   
     // Create a download link
     var mixLink = document.createElement('a');
@@ -32,7 +32,7 @@ function addMixLinkToPlaylistView (onload) {
             return(false);
         };
     
-    mixLinkText = document.createTextNode('✿ extract mix ' + mixID);
+    var mixLinkText = document.createTextNode('✿ extract mix ' + mixID);
     mixLink.appendChild(mixLinkText);
     mixLink.style.color = 'deeppink';
     
@@ -50,7 +50,7 @@ function addMixLinkToPlaylistView (onload) {
 function appendTrackLink (objTrack, mixID, trackCount) 
 {  
     // Find the mix download link
-    mixDownloadLink = document.getElementById('mix-start-dl-link-' + mixID);
+    var mixDownloadLink = document.getElementById('mix-start-dl-link-' + mixID);
     mixDownloadLink.style.color = 'deepskyblue';
     
     // Append the Track link (use downloadurl attrib to attempt auto renaming at time of download)
@@ -58,7 +58,7 @@ function appendTrackLink (objTrack, mixID, trackCount)
     if (trackExtension != 'm4a') { trackExtension = 'mp3'; }
     
     var trackLinkText  = document.createTextNode(trackCount + ': ' + objTrack.artist + ' - ' + objTrack.title);
-    var trackLink = document.createElement('a');
+    var trackLink      = document.createElement('a');
         trackLink.href = objTrack.downloadUrl;
         trackLink.setAttribute('download', objTrack.artist + ' - ' + objTrack.title + '.' + trackExtension);
         trackLink.appendChild(trackLinkText);
@@ -105,13 +105,14 @@ function handlePlayListResponse(xhrResponse, mixID, trackCount)
 function playlistRequestAction(mixID, trackCount)
 {    
     // alert(mixID);
+    var playlistStartURL = '';
     
     if (trackCount == 0) {
         // This is a request to start playing the mix
-    	var playlistStartURL = 'http://8tracks.com/sets/' + mixID + '/play?player=sm&include=track%5Bfaved%2Bannotation%2Byoutube%5D&mix_id=' + mixID + '&format=jsonh';
+    	playlistStartURL = 'http://8tracks.com/sets/' + mixID + '/play?player=sm&include=track%5Bfaved%2Bannotation%2Byoutube%5D&mix_id=' + mixID + '&format=jsonh';
     } else {
         // Otherwise it is a request to advance to the next track
-        var playlistStartURL = 'http://8tracks.com/sets/' + mixID + '/next?player=sm&include=track%5Bfaved%2Bannotation%2Byoutube%5D&mix_id=' + mixID + '&format=jsonh';
+        playlistStartURL = 'http://8tracks.com/sets/' + mixID + '/next?player=sm&include=track%5Bfaved%2Bannotation%2Byoutube%5D&mix_id=' + mixID + '&format=jsonh';
     }
     
     var xhr_playlistAction = new XMLHttpRequest();
